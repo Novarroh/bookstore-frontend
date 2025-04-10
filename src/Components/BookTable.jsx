@@ -1,12 +1,53 @@
-import { useState } from "react";
+// File: src/components/BookTable.jsx
+
+import { useState, useEffect } from "react";
 
 function BookTable({ books, onDelete, onEdit, isEditable, bookOptions }) {
+  const [userBooks, setUserBooks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
+
+
+  useEffect(() => {
+    fetchTableData();
+  },[]);
+
+  const fetchTableData=()=>{
+    fetch("/data/BooksTable.json")
+    .then((response) => response.json())
+    .then((data) => setUserBooks(data))
+    .catch((error) => console.error("Error fetching user books:", error));
+  }
+
+  const EditTableData=()=>{
+    
+  }
+  const deleteTableData = async (id) => {
+    try {
+      const response = await fetch(`/api/borrowings/${id}/return`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to return the book");
+      }
+
+      const data = await response.json();
+      alert(data.message || "Book returned successfully");
+
+      setUserBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    } catch (error) {
+      alert(error.message || "Something went wrong while returning the book");
+    }
+  };
+console.log("userBooks",userBooks);
   const startEditing = (book) => {
     setEditingId(book.id);
-    setEditValue(book.name);
+    setEditValue(book.book.title);
   };
 
   const saveEdit = (bookId) => {
@@ -64,33 +105,33 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions }) {
         </tr>
       </thead>
       <tbody>
-        {books.map((book) => (
-          <tr key={book.id}>
+        {userBooks.map((val) => (
+          <tr key={val.id}>
             <td style={tdStyle}>
-              {editingId === book.id ? (
+              {editingId === val.id ? (
                 <select
                   style={selectStyle}
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                 >
                   <option value="">Select a Book</option>
-                  {bookOptions.map((val, index) => (
-                    <option key={index} value={val.title}>
-                      {val.title}
+                  {bookOptions.map((option, index) => (
+                    <option key={index} value={option.title}>
+                      {option.title}
                     </option>
                   ))}
                 </select>
               ) : (
-                book.title
+                val.book.title
               )}
             </td>
             {isEditable && (
               <td style={tdStyle}>
-                {editingId === book.id ? (
+                {editingId === val.id ? (
                   <>
                     <button
                       style={buttonStyle}
-                      onClick={() => saveEdit(book.id)}
+                      onClick={() => saveEdit(val.id)}
                     >
                       Save
                     </button>
@@ -105,13 +146,13 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions }) {
                   <>
                     <button
                       style={buttonStyle}
-                      onClick={() => startEditing(book)}
+                      onClick={() => startEditing(val)}
                     >
                       Edit
                     </button>
                     <button
                       style={deleteButtonStyle}
-                      onClick={() => onDelete(book.id)}
+                      onClick={() => deleteTableData(val.id)}
                     >
                       Delete
                     </button>

@@ -1,0 +1,6 @@
+[
+    { "email": "admin@example.com", "first_name": "Admin", "last_name": "User", "id": 1, "role": "admin", "is_active": true },
+    { "email": "dilip.y@novarroh.com", "first_name": "dilip", "last_name": "y", "id": 2, "role": "customer", "is_active": true },
+    { "email": "ravi@yopmail.com", "first_name": "ravi", "last_name": "a", "id": 3, "role": "customer", "is_active": true }
+  ]
+  

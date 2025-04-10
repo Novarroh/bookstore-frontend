@@ -1,0 +1,45 @@
+[
+    {
+      "book_id": 10,
+      "user_id": 5,
+      "is_returned": false,
+      "id": 3,
+      "book": {
+        "title": "The Alchemist",
+        "author": "Paulo Coelho",
+        "id": 10,
+        "quantity": 7,
+        "available_quantity": 7
+      },
+      "user": {
+        "email": "Rajesha@yopmail.com",
+        "first_name": "Rajesh",
+        "last_name": "a",
+        "id": 5,
+        "role": "customer",
+        "is_active": true
+      }
+    },
+    {
+      "book_id": 21,
+      "user_id": 5,
+      "is_returned": false,
+      "id": 4,
+      "book": {
+        "title": "One Hundred Years of Solitude",
+        "author": "Gabriel García Márquez",
+        "id": 21,
+        "quantity": 6,
+        "available_quantity": 6
+      },
+      "user": {
+        "email": "Rajesha@yopmail.com",
+        "first_name": "Rajesh",
+        "last_name": "a",
+        "id": 5,
+        "role": "customer",
+        "is_active": true
+      }
+    }
+  ]
+  
