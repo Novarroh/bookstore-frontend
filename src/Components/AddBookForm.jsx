@@ -12,7 +12,7 @@ function AddBookForm({ onAddBook, bookOptions }) {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit }
       style={{
         display: "flex",
         alignItems: "center",
