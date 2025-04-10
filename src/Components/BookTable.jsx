@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function BookTable({ books, onDelete, onEdit, isEditable }) {
+function BookTable({ books, onDelete, onEdit, isEditable, bookOptions }) {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
@@ -10,21 +10,22 @@ function BookTable({ books, onDelete, onEdit, isEditable }) {
   };
 
   const saveEdit = (bookId) => {
-    onEdit(bookId, editValue);
+    if (editValue.trim() !== "") {
+      onEdit(bookId, editValue);
+    }
     setEditingId(null);
   };
 
-  // Styles
   const tableStyle = {
-    width: "100%",
     borderCollapse: "collapse",
-    marginTop: "20px",
+    margin: 'auto',
+    border: '1px solid rgb(221, 221, 221)',
+    marginTop: "2rem",
   };
 
   const thStyle = {
     backgroundColor: "#f4f4f4",
     padding: "12px",
-    textAlign: "left",
     borderBottom: "2px solid #ddd",
   };
 
@@ -48,7 +49,7 @@ function BookTable({ books, onDelete, onEdit, isEditable }) {
     backgroundColor: "#f44336",
   };
 
-  const inputStyle = {
+  const selectStyle = {
     padding: "6px",
     borderRadius: "4px",
     border: "1px solid #ccc",
@@ -67,35 +68,55 @@ function BookTable({ books, onDelete, onEdit, isEditable }) {
           <tr key={book.id}>
             <td style={tdStyle}>
               {editingId === book.id ? (
-                <input
-                  style={inputStyle}
+                <select
+                  style={selectStyle}
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
-                />
+                >
+                  <option value="">Select a Book</option>
+                  {bookOptions.map((val, index) => (
+                    <option key={index} value={val.title}>
+                      {val.title}
+                    </option>
+                  ))}
+                </select>
               ) : (
-                book.name
+                book.title
               )}
             </td>
             {isEditable && (
               <td style={tdStyle}>
                 {editingId === book.id ? (
-                  <button style={buttonStyle} onClick={() => saveEdit(book.id)}>
-                    Save
-                  </button>
+                  <>
+                    <button
+                      style={buttonStyle}
+                      onClick={() => saveEdit(book.id)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      style={deleteButtonStyle}
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancel
+                    </button>
+                  </>
                 ) : (
-                  <button
-                    style={buttonStyle}
-                    onClick={() => startEditing(book)}
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      style={buttonStyle}
+                      onClick={() => startEditing(book)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      style={deleteButtonStyle}
+                      onClick={() => onDelete(book.id)}
+                    >
+                      Delete
+                    </button>
+                  </>
                 )}
-                <button
-                  style={deleteButtonStyle}
-                  onClick={() => onDelete(book.id)}
-                >
-                  Delete
-                </button>
               </td>
             )}
           </tr>

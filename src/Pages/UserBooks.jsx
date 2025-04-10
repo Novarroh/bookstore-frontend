@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import AddBookForm from "../Components/AddBookForm";
 import BookTable from "../Components/BookTable";
 
-function UserBooks({ books, setBooks, users, currentUser }) {
+function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
   const { userId } = useParams();
   const user = users.find((u) => u.id === parseInt(userId));
   const userBooks = books[user.id] || [];
@@ -32,14 +32,15 @@ function UserBooks({ books, setBooks, users, currentUser }) {
   };
 
   return (
-    <div>
-      <h2>Books borrowed by {user.name}</h2>
+    <div style={{padding:'2rem'}}>
+      <h2>Books borrowed by {user?.first_name}</h2>
       {(currentUser.role === "admin" || currentUser.role === "librarian") && (
-        <AddBookForm onAddBook={handleAddBook} />
+        <AddBookForm onAddBook={handleAddBook} bookOptions={bookOptions} />
       )}
       <BookTable
+      bookOptions={bookOptions}
         books={userBooks}
-        onDelete={handleDeleteBook}
+        onDelete={handleDeleteBook} 
         onEdit={handleEditBook}
         isEditable={
           currentUser.role === "admin" || currentUser.role === "librarian"

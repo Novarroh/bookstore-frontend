@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-function AddBookForm({ onAddBook }) {
-  const [bookName, setBookName] = useState("");
+function AddBookForm({ onAddBook, bookOptions }) {
+  const [selectedBook, setSelectedBook] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (bookName.trim() === "") return;
-    onAddBook(bookName);
-    setBookName("");
+    if (selectedBook.trim() === "") return;
+    onAddBook(selectedBook);
+    setSelectedBook("");
   };
 
   return (
@@ -25,10 +25,9 @@ function AddBookForm({ onAddBook }) {
         margin: "20px auto",
       }}
     >
-      <input
-        value={bookName}
-        onChange={(e) => setBookName(e.target.value)}
-        placeholder="New Book Name"
+      <select
+        value={selectedBook}
+        onChange={(e) => setSelectedBook(e.target.value)}
         style={{
           flex: 1,
           padding: "10px 14px",
@@ -36,7 +35,14 @@ function AddBookForm({ onAddBook }) {
           border: "1px solid #ccc",
           fontSize: "16px",
         }}
-      />
+      >
+        <option value="">Select a Book</option>
+        {bookOptions.map((val, index) => (
+          <option key={index} value={val.title}>
+            {val.title}
+          </option>
+        ))}
+      </select>
       <button
         type="submit"
         style={{
@@ -49,8 +55,8 @@ function AddBookForm({ onAddBook }) {
           cursor: "pointer",
           transition: "background-color 0.3s",
         }}
-        onMouseOver={(e) => (e.target.style.backgroundColor = "#45a049")}
-        onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+        onMouseOver={(e) => (e.target.style.backgroundColor = "#3f72af")}
+        onMouseOut={(e) => (e.target.style.backgroundColor = "#3f72af")}
       >
         Add Book
       </button>
