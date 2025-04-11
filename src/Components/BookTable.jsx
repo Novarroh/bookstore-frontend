@@ -74,7 +74,6 @@ function BookTable({  isEditable, bookOptions ,currentUser,userId,bookAdded}) {
       alert(error.message || "Something went wrong while returning the book");
     }
   };
-console.log("userBooks",userBooks);
   const startEditing = (book) => {
     setEditingId(book.id);
     setEditValue(book.book.title);

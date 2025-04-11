@@ -3,7 +3,7 @@ import AddBookForm from "../Components/AddBookForm";
 import BookTable from "../Components/BookTable";
 import { useState } from "react";
 
-function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
+function UserBooks({ books, users, currentUser,bookOptions }) {
   const [bookAdded,setbookAdded]=useState(false)
   const { userId } = useParams();
   const user = users.find((u) => u.id === parseInt(userId));
@@ -47,17 +47,17 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
 
 
   return (
-    <div style={{padding:'2rem'}}>
+    <div style={{ padding: '2rem' }}>
       <h2>Books borrowed by {user?.first_name}</h2>
       {(currentUser.role === "admin" || currentUser.role === "librarian") && (
         <AddBookForm onAddBook={handleAddBook} bookOptions={bookOptions} setbookAdded={setbookAdded} />
       )}
       <BookTable
-      bookOptions={bookOptions}
+        bookOptions={bookOptions}
         books={userBooks}
         bookAdded={bookAdded}
         currentUser={currentUser}
-        userId={ user?.id||null}
+        userId={user?.id || null}
         isEditable={
           currentUser.role === "admin" || currentUser.role === "librarian"
         }

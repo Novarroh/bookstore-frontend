@@ -26,7 +26,6 @@ function Register() {
       last_name: lastName,
       password: password,
     };
-    console.log("payload",payload)
     try {
       const response = await fetch("http://localhost:5000/api/users/register", {
         method: "POST",

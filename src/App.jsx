@@ -22,12 +22,6 @@ function App() {
       .then(data => setUsers(data))
       .catch(error => console.error("Error fetching users:", error));
 
-    // Fetch books data
-    fetch("/data/books.json")
-      .then(response => response.json())
-      .then(data => setBooks(data))
-      .catch(error => console.error("Error fetching books:", error));
-
     // Fetch book options data
     fetch("/data/bookOptions.json")
       .then(response => response.json())
