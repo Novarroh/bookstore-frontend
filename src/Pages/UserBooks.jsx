@@ -26,7 +26,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
 
       const payload = {
         book_id: selectedBook.id,
-        user_id: userBooks[0]?.user?.id || null, // fallback to user ID 1 if not found
+        user_id: user?.id|| null, // fallback to user ID 1 if not found
         is_returned: false,
         current_user_id: currentUser?.id || null,
       };
