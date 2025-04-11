@@ -9,22 +9,9 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
   const user = users.find((u) => u.id === parseInt(userId));
   const userBooks = books[user.id] || [];
 
-  // const handleAddBook = (bookName) => {
-
-  //   const newBook = { id: Date.now(), name: bookName };
-  //   setBooks((prev) => ({
-  //     ...prev,
-  //     [user.id]: [...(prev[user.id] || []), newBook],
-  //   }));
-  // };
-
   const handleAddBook = async (bookName) => {
     try {
       const selectedBook = bookOptions.find((book) => book.title === bookName);
-      if (!selectedBook) {
-        alert("Selected book not found");
-        return;
-      }
 
       const payload = {
         book_id: selectedBook.id,
@@ -46,7 +33,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
       }
 
       const data = await response.json();
-      setbookAdded(true);
+      setbookAdded(!bookAdded);
       alert(data.message || "Book added successfully");
 
 
@@ -56,21 +43,6 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
     }
   };
 
-  const handleDeleteBook = (bookId) => {
-    setBooks((prev) => ({
-      ...prev,
-      [user.id]: prev[user.id].filter((book) => book.id !== bookId),
-    }));
-  };
-
-  const handleEditBook = (bookId, newName) => {
-    setBooks((prev) => ({
-      ...prev,
-      [user.id]: prev[user.id].map((book) =>
-        book.id === bookId ? { ...book, name: newName } : book
-      ),
-    }));
-  };
 
   return (
     <div style={{padding:'2rem'}}>
@@ -82,8 +54,6 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
       bookOptions={bookOptions}
         books={userBooks}
         bookAdded={bookAdded}
-        onDelete={handleDeleteBook} 
-        onEdit={handleEditBook}
         currentUser={currentUser}
         userId={ user?.id||null}
         isEditable={

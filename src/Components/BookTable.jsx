@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser,userId,bookAdded}) {
+function BookTable({  isEditable, bookOptions ,currentUser,userId,bookAdded}) {
   const [userBooks, setUserBooks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");

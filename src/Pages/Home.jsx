@@ -1,15 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-function Home({ currentUser, users }) {
+function Home({ users }) {
   const navigate = useNavigate();
-
-  // if (!currentUser) {
-  //   return <p>Please login first.</p>;
-  // }
-
-  // if (currentUser.role === "customer") {
-  //   return <h2>Hello, {currentUser.name}!</h2>;
-  // }
 
   const handleSelectUser = (userId) => {
     navigate(`/user/${userId}`);
