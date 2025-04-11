@@ -41,7 +41,7 @@ function App() {
       .then(data => setBookOptions(data))
       .catch(error => console.error("Error fetching book options:", error));
   }, []);
-console.log("users",users )
+
   const handleLogin = async (email, password) => {
     try {
       const response = await fetch("http://localhost:5000/api/users/login", {
@@ -54,7 +54,12 @@ console.log("users",users )
 
       const data = await response.json();
       setCurrentUser(data);
-      navigate("/Home");
+      if(data.role==='customer'){
+        navigate(`/user/${data.id}`);
+      }else{
+        navigate("/Home");
+      }
+     
     } catch (error) {
       alert(error.message || "Something went wrong");
     }
