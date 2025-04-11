@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser}) {
+function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser,userId}) {
   const [userBooks, setUserBooks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -13,7 +13,7 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUs
   },[]);
 
   const fetchTableData=()=>{
-    fetch("/data/BooksTable.json")
+    fetch(`http://localhost:5000/api/borrowings/user/${userId}`)
     .then((response) => response.json())
     .then((data) => setUserBooks(data))
     .catch((error) => console.error("Error fetching user books:", error));

@@ -81,6 +81,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
         onDelete={handleDeleteBook} 
         onEdit={handleEditBook}
         currentUser={currentUser}
+        userId={ user?.id||null}
         isEditable={
           currentUser.role === "admin" || currentUser.role === "librarian"
         }

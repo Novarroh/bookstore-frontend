@@ -43,7 +43,6 @@ function Register({ onRegister }) {
       }
 
       const data = await response.json();
-      onRegister(data);
       navigate("/Login");
     } catch (err) {
       setError("An error occurred. Please try again.");
