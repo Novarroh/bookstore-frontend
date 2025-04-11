@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import AddBookForm from "../Components/AddBookForm";
 import BookTable from "../Components/BookTable";
+import { useState } from "react";
 
 function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
+  const [bookAdded,setbookAdded]=useState(false)
   const { userId } = useParams();
   const user = users.find((u) => u.id === parseInt(userId));
   const userBooks = books[user.id] || [];
@@ -73,11 +75,12 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
     <div style={{padding:'2rem'}}>
       <h2>Books borrowed by {user?.first_name}</h2>
       {(currentUser.role === "admin" || currentUser.role === "librarian") && (
-        <AddBookForm onAddBook={handleAddBook} bookOptions={bookOptions} />
+        <AddBookForm onAddBook={handleAddBook} bookOptions={bookOptions} setbookAdded={setbookAdded} />
       )}
       <BookTable
       bookOptions={bookOptions}
         books={userBooks}
+        bookAdded={bookAdded}
         onDelete={handleDeleteBook} 
         onEdit={handleEditBook}
         currentUser={currentUser}

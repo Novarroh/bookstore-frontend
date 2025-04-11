@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser,userId}) {
+function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser,userId,bookAdded}) {
   const [userBooks, setUserBooks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -10,7 +10,7 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUs
 
   useEffect(() => {
     fetchTableData();
-  },[]);
+  },[bookAdded]);
 
   const fetchTableData=()=>{
     fetch(`http://localhost:5000/api/borrowings/user/${userId}`)
@@ -126,7 +126,6 @@ console.log("userBooks",userBooks);
         <tr>
           <th style={thStyle}>Book Name</th>
           <th  style={thStyle}>Book Author</th>
-          <th  style={thStyle}>available quantity</th>
           {isEditable && <th style={thStyle}>Actions</th>}
         </tr>
       </thead>
@@ -152,7 +151,6 @@ console.log("userBooks",userBooks);
               )}
             </td>
             <td  style={tdStyle}>{val.book.author}</td>
-            <td  style={tdStyle}>{val.book.available_quantity}</td>
             {isEditable && (
               <td style={tdStyle}>
                 {editingId === val.id ? (
