@@ -99,7 +99,7 @@ function App() {
           backgroundColor: '#f5f5f5',
           borderBottom: '1px solid #ddd'
         }}>
-          <div>Welcome, {currentUser.name} ({currentUser.role})</div>
+          <div>Welcome, {currentUser?.first_name+" "+currentUser?.last_name} ({currentUser?.role})</div>
           <button 
             onClick={handleLogout}
             style={{
