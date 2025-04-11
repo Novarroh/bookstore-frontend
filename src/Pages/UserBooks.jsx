@@ -31,7 +31,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
         current_user_id: currentUser?.id || null,
       };
 
-      const response = await fetch(`/api/borrowings`, {
+      const response = await fetch(`http://localhost:5000/api/borrowings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

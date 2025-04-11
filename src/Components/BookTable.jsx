@@ -24,7 +24,7 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUs
   }
   const deleteTableData = async (id) => {
     try {
-      const response = await fetch(`/api/borrowings/${id}/return`, {
+      const response = await fetch(`http://localhost:5000/api/borrowings/${id}/return`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
