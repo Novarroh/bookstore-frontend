@@ -19,8 +19,36 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUs
     .catch((error) => console.error("Error fetching user books:", error));
   }
 
-  const EditTableData=()=>{
-    
+  const EditTableData=async(deleted_id)=>{
+    const selectedBook = bookOptions.find((book) => book.title === editValue);
+      if (!selectedBook) {
+        alert("Selected book not found");
+        return;
+      }
+      const payload = {
+        book_id: selectedBook.id,
+        user_id: userId|| null, // fallback to user ID 1 if not found
+        is_returned: false,
+        current_user_id: currentUser?.id || null,
+      };
+
+      const response = await fetch(`http://localhost:5000/api/borrowings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add the book");
+      }
+
+      const data = await response.json();
+      deleteTableData(deleted_id);
+      alert(data.message || "Book added successfully");
+      setEditingId(null);
+
   }
   const deleteTableData = async (id) => {
     try {
@@ -49,12 +77,7 @@ console.log("userBooks",userBooks);
     setEditValue(book.book.title);
   };
 
-  const saveEdit = (bookId) => {
-    if (editValue.trim() !== "") {
-      onEdit(bookId, editValue);
-    }
-    setEditingId(null);
-  };
+
 
   const tableStyle = {
     borderCollapse: "collapse",
@@ -136,7 +159,7 @@ console.log("userBooks",userBooks);
                   <>
                     <button
                       style={buttonStyle}
-                      onClick={() => saveEdit(val.id)}
+                      onClick={() => EditTableData(val.id)}
                     >
                       Save
                     </button>
