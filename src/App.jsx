@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     // Fetch users data
-    fetch("/data/users.json")
+    fetch("http://localhost:5000/api/users")
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error("Error fetching users:", error));
