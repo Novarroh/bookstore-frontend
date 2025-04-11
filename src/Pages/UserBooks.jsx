@@ -46,6 +46,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
       }
 
       const data = await response.json();
+      setbookAdded(true);
       alert(data.message || "Book added successfully");
 
 
