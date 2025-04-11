@@ -47,6 +47,7 @@ function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUs
       const data = await response.json();
       deleteTableData(deleted_id);
       alert(data.message || "Book added successfully");
+      fetchTableData();
       setEditingId(null);
 
   }
