@@ -40,8 +40,10 @@ function BookTable({  isEditable, bookOptions ,currentUser,userId,bookAdded}) {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add the book");
+      if (!response.ok) {        
+        const data = await response.json();
+        alert(data.detail);
+        return;
       }
 
       const data = await response.json();

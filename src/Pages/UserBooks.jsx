@@ -7,7 +7,7 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
   const [bookAdded,setbookAdded]=useState(false)
   const { userId } = useParams();
   const user = users.find((u) => u.id === parseInt(userId));
-  const userBooks = books[user.id] || [];
+  const userBooks = books[user?.id] || [];
 
   const handleAddBook = async (bookName) => {
     try {
@@ -29,7 +29,9 @@ function UserBooks({ books, setBooks, users, currentUser,bookOptions }) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add the book");
+        const data = await response.json();
+        alert(data.detail);
+        return;
       }
 
       const data = await response.json();
