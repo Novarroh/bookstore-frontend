@@ -11,14 +11,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [books, setBooks] = useState({});
   const [bookOptions, setBookOptions] = useState([]);
-  const [currentUser, setCurrentUser] = useState({
-    "email": "admin@example.com",
-    "first_name": "Admin",
-    "last_name": "User",
-    "id": 1,
-    "role": "admin",
-    "is_active": true
-});
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -65,24 +58,6 @@ function App() {
     }
   };
 
-  const handleRegister = (name, email, password) => {
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters");
-      return;
-    }
-
-    const newUser = {
-      id: users.length + 1,
-      name,
-      email,
-      password,
-      role: "customer",
-    };
-
-    setUsers([...users, newUser]);
-    alert("Registered successfully! Please login.");
-    navigate("/login");
-  };
 
   const handleLogout = () => {
     setCurrentUser(null);
@@ -119,7 +94,7 @@ function App() {
       <Routes>
         <Route path="/Home" element={<Home currentUser={currentUser} users={users} onLogout={handleLogout} />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register onRegister={handleRegister} />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/user/:userId" element={<UserBooks bookOptions={bookOptions} books={books} setBooks={setBooks} users={users} currentUser={currentUser} onLogout={handleLogout} />} />
         <Route path="*" element={<Login onLogin={handleLogin} />} />
       </Routes>
