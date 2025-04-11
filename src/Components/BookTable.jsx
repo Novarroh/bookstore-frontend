@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 
-function BookTable({ books, onDelete, onEdit, isEditable, bookOptions }) {
+function BookTable({ books, onDelete, onEdit, isEditable, bookOptions ,currentUser}) {
   const [userBooks, setUserBooks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
-
 
 
   useEffect(() => {
@@ -62,12 +61,14 @@ console.log("userBooks",userBooks);
     margin: 'auto',
     border: '1px solid rgb(221, 221, 221)',
     marginTop: "2rem",
+    width:'100%',
   };
 
   const thStyle = {
     backgroundColor: "#f4f4f4",
     padding: "12px",
     borderBottom: "2px solid #ddd",
+    textAlign: "left",
   };
 
   const tdStyle = {
@@ -101,6 +102,8 @@ console.log("userBooks",userBooks);
       <thead>
         <tr>
           <th style={thStyle}>Book Name</th>
+          <th  style={thStyle}>Book Author</th>
+          <th  style={thStyle}>available quantity</th>
           {isEditable && <th style={thStyle}>Actions</th>}
         </tr>
       </thead>
@@ -125,6 +128,8 @@ console.log("userBooks",userBooks);
                 val.book.title
               )}
             </td>
+            <td  style={tdStyle}>{val.book.author}</td>
+            <td  style={tdStyle}>{val.book.available_quantity}</td>
             {isEditable && (
               <td style={tdStyle}>
                 {editingId === val.id ? (
